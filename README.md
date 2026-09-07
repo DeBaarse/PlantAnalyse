@@ -1,2 +1,2 @@
 # PlantAnalyse
-Fabian,Lucas, Mohammed, Tristan
+Fabian Kinds, Lucas Bos, Mohammed Kalesh, Tristan Kruithof

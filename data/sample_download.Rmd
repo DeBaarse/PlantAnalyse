@@ -1,9 +1,9 @@
 ```{bash SRA_download, eval=FALSE}
-#prefetch $(</homes/ronald/werd/2026-2027/SraAccList.csv) --output-directory \
-#  /students/2026-2027/Thema05/RonaldDemo/SRA
+prefetch $(</homes/tjdkruithof/bin-jaar-2/blok-1-genomics-transcriptomics/PlantAnalyse/data/SRR_Acc_List.txt) --output-directory \
+  /students/2026-2027/Thema05/plantanalysegroep2/SRA
 ```
 
 ```{bash extract_fastq, eval=FALSE}
-#find /students/2026-2027/Thema05/RonaldDemo/SRA -name "*.sra" | \
-#  parallel 'fasterq-dump -O /students/2026-2027/Thema05/Ronald/fastq/ {}'
+find /students/2026-2027/Thema05/RonaldDemo/SRA -name "*.sra" | \
+  echo parallel 'fasterq-dump -O -t /students/2026-2027/Thema05/plantanalysegroep2/fastq/ {} /students/2026-2027/Thema05/plantanalysegroep2/temp/ {}'
 ```

@@ -1,3 +1,16 @@
+DOWNLOADING SAMPLE DATA
+
+```{bash SRA_download, eval=FALSE}
+prefetch $(</homes/tjdkruithof/bin-jaar-2/blok-1-genomics-transcriptomics/PlantAnalyse/data/SRR_Acc_List.txt) --output-directory \
+  /students/2026-2027/Thema05/plantanalysegroep2/SRA
+```
+
+```{bash extract_fastq, eval=FALSE}
+find /students/2026-2027/Thema05/plantanalysegroep2/SRA -name "*.sra" | \
+  parallel 'fasterq-dump -O /students/2026-2027/Thema05/plantanalysegroep2/fastq -t /students/2026-2027/Thema05/plantanalysegroep2/temp {}'
+```
+
+
 
 QUALITY CONTROL
 fastqc command: fastqc *.fastq.gz -o fastqc_all

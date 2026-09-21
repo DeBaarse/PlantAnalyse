@@ -1,5 +1,0 @@
-```{bash}
-seqtk sample read1.fq.gz 100000 > 
-```
-
-

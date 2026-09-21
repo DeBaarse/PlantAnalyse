@@ -1,0 +1,34 @@
+
+QUALITY CONTROL
+fastqc command: fastqc *.fastq.gz -o fastqc_all
+multiqc command: multiqc fastqc_all -o multiqc_report
+
+STAR
+making a STAR genome index: STAR --runThreadN 8 --runMode genomeGenerate --genomeDir genome_index --genomeFastaFiles GRCh38.fa --sjdbGTFfile annotation.gtf --sjdbOverhang 100
+Loop on alle STAR samples te doorlopen: for f in *R1.fastq.gz; do base=(basename "$f" _R1.fastq.gz); STAR --runThreadN 8 --genomeDir genome_index --readFilesIn ${base}_R1.fastq.gz ${base}_R2.fastq.gz --readFilesCommand zcat --outFileNamePrefix star_outputs/{base}_ --outSAMtype BAM SortedByCoordinate; done
+
+SAMTOOLS
+?????Daarna nog een keer multiQC
+Samtools index: samtools index sample_Aligned.sortedByCoord.out.bam
+
+BCFTOOLS
+bcftools mpileup: 
+bcftools mpileup \
+  -f reference.fa \
+  sample_Aligned.sortedByCoord.out.bam \
+  -O b \
+  -o sample.mpileup.bcf
+bcftools call:
+bcftools call \
+  -m \
+  -v \
+  -O v \
+  -o sample.vcf \
+  sample.mpileup.bcf
+bcftools filter:
+bcftools filter \
+  -i 'QUAL>=30 && DP>=10' \
+  -o sample.filtered.vcf \
+  sample.vcf
+?????Misschien multiQC
+

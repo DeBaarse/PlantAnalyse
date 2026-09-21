@@ -1,0 +1,346 @@
+---
+title: "Logboek"
+author: "Tristan Kruithof"
+date: "`r Sys.Date()`"
+output: word_document
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+### Introductie
+
+
+
+
+### Motivatie
+
+Genetische varianten in planten die zorgen dat planten 
+eerder in ontwikkeling over gaan naar een reproductieve 
+staat, kunnen bijvoorbeeld sneller fruit leveren of sneller
+kruisen met elkaar zodat je sneller gewenste eigenschappen
+kan combineren. 
+
+
+### Onderzoeksvraag
+
+Welke genetische varianten zijn geassocieerd met pseudotime van de plant 
+Arabidopsis thaliana tijdens de overgang van vegetatieve en reproductieve groei?
+
+### Hoofddoel
+
+Kijken of wij de vindingen van het genomics 
+gedeelte van hetonderzoek kunnen reproduceren.
+
+
+### Github Repo (zie voor meer info over het onderzoek en data)
+
+https://github.com/DeBaarse/PlantAnalyse
+
+### Waar kan ik de data vinden?
+
+#### Op de github repo:
+
+https://github.com/DeBaarse/PlantAnalyse/tree/main/data
+
+
+#### Word document:
+
+
+
+
+# Logboek - genomics & transcriptomics
+
+
+### 07/09/2026
+
+#### Doel:
+
+Informatie krijgen over het begin van de casus en een artikel zoeken waarbij genomics en transcriptomics voorkomt.
+En we moeten een begin maken met ons plan van aanpak. 
+
+
+#### Motivatie:
+
+We moeten een artikel vinden waarbij beide voorkomt en die wij interessant vinden. 
+
+
+#### Werkzaamheden:
+
+Eerst hebben we geluisterd naar de uitleg van de casus en daarna zijn we bezig gegaan met een artikel zoeken op ncbi,
+waarbij de volledige publicatie ook zichtbaar was. 
+
+Hier hebben we de links van het artikel: 
+https://pubmed.ncbi.nlm.nih.gov/39121073/
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE242681
+
+Het artikel gaat over de transcriptional events die plaatsvinden in de overgang van planten van not-bolting to bolting.
+(not flowering and flowering).
+
+En hier de link naar de dataset die ze hebben gebruikt.
+https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA1014093&o=acc_s%3Aa
+
+Ook is er in teams een gedeeld document gemaakt voor de PVA (plan van aanpak).
+
+https://hanzenl.sharepoint.com/:w:/r/teams/BrightspaceGenomicsTranscriptomicsTeam-Groep-2/Gedeelde%20documenten/PVA.docx?d=w4e1a9ac7982b4039b7dc71da3b7c5648&csf=1&web=1&e=f4dhAK
+
+Ook hebben we een github aangemaakt:
+https://github.com/DeBaarse/PlantAnalyse
+
+Ik heb ook vervolgens al gelijk mijn logboek aangemaakt, zodat ik vanaf vandaag alles kan bijhouden.
+En ik heb al een begin gemaakt met de planning in de pva.
+
+#### Bestanden aangepast:
+
+pva.docx (online)
+
+#### Resultaten/stand van zaken:
+
+We hebben vandaag eigenlijk alles gedaan wat we wilden doen. Dus dat is mooi. 
+
+#### Conclusie en vervolgstappen:
+
+Gedaan wat we moesten doen, maar we moeten nog veel doen aan het plan van aanpak, uitzoeken hoe we de data
+moeten downloaden en waar. En welke onderzoeks vraag we moeten stellen als we het alleen over genomics hebben.
+Ook moeten we het artikel grondig doorlezen. 
+
+
+### 11/09/2026
+
+Hier was ik niet aanwezig.
+
+
+### 13/09/2026
+
+#### Doel:
+
+In de trein gemiste lesstof bekijken en het artikel over bolting plants overzichtelijk inlezen.
+
+#### Conclusie en vervolgstappen:
+
+Verkeerde les ingelezen, maar het artikel heb ik wel iets duidelijker voor mij. 
+
+
+### 14/09/2026
+
+#### Doel:
+
+PVA afmaken, aan het logboek verder werken, PVA powerpoint maken, git clonen, voorbereidingen doen voor
+het downloaden van onze data. Beter inlezen op het artikel. 
+
+#### Motivatie:
+
+We moeten nog enorm veel doen en uitzoeken voor ons project en lopen er een stuk achter mee. Dus we moeten 
+flink bezig gaan zodat het ons nog lukt voor de presentatie morgen. Met de rest moeten we ook echt bezig gaan, want
+we lopen nu al achter. 
+
+
+#### Werkzaamheden:
+Na alle uitleg over sequencing methodes ben ik begonnen met een ander project, waarbij je in galaxy moet werken.
+Daarna ben ik begonnen met de PVA maken en de presentatie daarbij. We hadden hiervoor een document pva en een presentatie
+genomics met deze links (zullen waarschijnlijk niet werken).
+PVA
+https://hanzenl.sharepoint.com/:w:/r/teams/BrightspaceGenomicsTranscriptomicsTeam-Groep-2/_layouts/15/Doc.aspx?action=edit&sourcedoc=%7B4e1a9ac7-982b-4039-b7dc-71da3b7c5648%7D&wdExp=TEAMS-TREATMENT&web=1
+PP
+https://hanzenl.sharepoint.com/:p:/r/teams/BrightspaceGenomicsTranscriptomicsTeam-Groep-2/_layouts/15/Doc.aspx?action=edit&sourcedoc=%7Bcd4f40ef-992e-4140-a2b5-2cfdcedf3fd4%7D&wdExp=TEAMS-TREATMENT&web=1
+Ik heb voornamelijk als groepsgenoot andere mensen aangestuurd dingen te doen en suggesties gemaakt over hoe we het beter konden doen, veel is via whatsapp gecommuniceerd.
+Zelf heb ik het deel gemaakt over de data van het orginele onderzoek en hoe we dat gaan gebruiken gemaakt. Ook heb ik de vervolgstappen en de referenties gemaakt. 
+
+De locatie voor de data van het experiment dat we nog moeten downloaden heb ik aangemaakt op assemblix in een map onder students.
+We gebruiken hiervoor de online rstudio van https://bioinf.nl/rstudio. Ook heb ik dit gepushed naar de repo op github.
+
+Toen de presentatie grotendeels af was heb ik mij nog even verder verdiept op dingen uit het artikel dat ik nog niet volledige snapte, zoals de pseudotijd
+met de planten. Ook had ik nog een scriptje van Ronald gekopieerd dat nodig is voor het downloaden van al onze samples op assemblix.
+
+
+#### Bestanden aangepast:
+
+genomics.pptx (online)
+pva.docx (online)
+github repo (online)
+
+
+#### Resultaten/stand van zaken:
+
+repo is aangepast, pva bijna af, script voor downloaden staat klaar, presentatie is af, batterij is leeg...
+En ik heb mij verder verdiept in het artikel en vooral de dingen die nog onduidelijk voor mij waren. 
+
+
+#### Conclusie en vervolgstappen:
+
+Ik heb eigenlijk alles kunnen doen voor dit project wat ik had willen doen, dus dat is goed.
+Maar een groepsgenoot is ziek, dus we moeten morgen bij de presentatie zijn deel van hem overnemen, dus dat nog maar even zien. 
+We moeten ons ook nog beter verdiepen in de tools en welke we specifiek moeten gebruiken en hoe. 
+En we willen morgen na de presentaties graag de data van het experiment op assemblix downloaden.
+Ohja ik heb ook mijn logboek aangepast.
+
+
+
+### 15/09/2026
+
+#### Doel:
+De dag overleven. Ja natuurlijk, maar ook de presentatie over ons plan van aanpak presenteren (met een persoon minder) 
+en de puntjes op de I ermee zetten. Luisteren naar uitleg over de minIon, verder werken aan mij logboek en zorgen dat we de data 
+eindelijk downloaden op het assemblix systeem, zodat we kunnen beginnen met een subset maken van onze data.
+
+
+#### Motivatie:
+We moeten vandaag presenteren. We moeten vandaag de data downloaden. We moeten vandaag luisteren naar uitleg.
+En ik moet vandaag verder werken aan mijn logboek.
+
+
+#### Werkzaamheden:
+Eerst hadden we de presentaties, die gingen goed (wat mij betreft (zelfs met één minder (dit lijkt haast meer een dagboek))).
+Met wat punten op de Y heb ik de presentatie ingeleverd op brightspace. Daarna hadden we uitleg over de minIon, dat was zeer
+interessant. Cool ding. 
+
+Hierna kwam het echte werk. Ik had gister al een script klaar gezet in de map op assemblix, maar ik moest hiervoor nog de onjuiste paths
+vervangen met de juiste paths. Hier zie je dat script, daarna hebben we de download gestart en ging ik naar huis, sporten, niet naar huis dus,
+maar naar de sportschool. 
+
+```{bash SRA_download, eval=FALSE}
+prefetch $(</homes/tjdkruithof/bin-jaar-2/blok-1-genomics-transcriptomics/PlantAnalyse/data/SRR_Acc_List.txt) --output-directory \
+  /students/2026-2027/Thema05/plantanalysegroep2/SRA
+```
+
+```{bash extract_fastq, eval=FALSE}
+find /students/2026-2027/Thema05/plantanalysegroep2/SRA -name "*.sra" | \
+  parallel 'fasterq-dump -O -t /students/2026-2027/Thema05/plantanalysegroep2/fastq/ {} /students/2026-2027/Thema05/plantanalysegroep2/temp/ {}'
+```
+
+Daarna heb ik nog aan mijn logboek gewerkt en gekeken of de download al klaar was vanuit thuis door in te loggen op bioinf.nl.
+De download was klaar maar ik kon niet de volgende stap doen, want hij geeft aan "no quality column available". Ohja ik had de changes nog gepushed naar de git.
+
+
+#### Bestanden aangepast:
+
+git repo (online)
+genomics.pptx (online)
+sample_download.Rmd (andere computer)
+
+
+#### Resultaten/stand van zaken:
+
+Met de presentatie af en gedaan, kunnen we ons op de belangrijke dingen focussen. Namelijk de data downloaden, check, en faster-q-dump, FAIL. 
+Dat is wat minder. Dus dat moet nog gefixed worden. Logboek is goed aangepast. 
+
+#### Conclusie en vervolgstappen:
+
+We kregen te horen dat we nog beter onze tools moesten uitzoeken tijdens de presentatie. En het downloaden van de data is dus nog niet geheel gelukt.
+Maar zodra we de data gedownload hebben moet we nog een subset maken van de data, die wat kleiner is.
+
+
+### 20/09/2026
+
+#### Doel:
+Faster-q dump commando fixen en het opnieuw aanzetten zodat het morgen ochtend klaar is.
+
+
+#### Motivatie:
+We hadden deze stap nog niet gedaan omdat het de vorige keer een error gaf.
+
+
+#### Werkzaamheden:
+Ik heb gekeken naar wat ronald had gestuurd op teams om te zien wat er fout ging.
+Ik heb het vervolgens veranderd naar dit en het gestart.
+
+```{bash extract_fastq, eval=FALSE}
+find /students/2026-2027/Thema05/plantanalysegroep2/SRA -name "*.sra" | \
+  parallel 'fasterq-dump -O /students/2026-2027/Thema05/plantanalysegroep2/fastq -t /students/2026-2027/Thema05/plantanalysegroep2/temp {}'
+```
+Dat was het.
+
+#### Bestanden aangepast:
+
+sample_download.Rmd (online)
+
+
+#### Resultaten/stand van zaken:
+Het is gelukt als het goed is zien we morgen.
+
+
+#### Conclusie en vervolgstappen:
+Nu we deze stap gedaan hebben moeten morgen nog een subset maken en een quality control doen op al onze data.
+
+
+### 21/09/2026
+
+#### Doel:
+We moeten een quality control doen op onze gehele dataset. En we moeten een subset, een kleine dataset, maken. Ook moeten we meer research doen op de volgende tools die we moeten gebruiken in onze pipeline.
+
+
+#### Motivatie:
+Een subset hebben we nodig voor het in eerste instantie proberen van onze volledige pipeline zodra die klaar is, om te zien of alle commando's doen wat wij willen. Zo duurt het niet heel erg lang om dat te weten in vergelijking tot de hele dataset gebruiken. Ook moeten we nog een quality control doen op al onze data, hier krijg je dan een report uit. Alleen moeten we nog uitzoeken hoe we dat precies doen met veel verschillende bestanden. We gaan dan kijken of onze data goed genoeg is en of we bepaalde data eruit moeten laten. 
+
+
+#### Werkzaamheden:
+Onderzoek gedaan naar de tools die we nodig hebben om de subset te maken en de quality control te doen.
+We kwamen op deze tool, seqtk, https://github.com/lh3/seqtk. hiervoor moesten we het eerst downloaden, hoe je dat doet kun je vinden op de github van seqtk. Daarna hebben we deze 2 commando's uitgevoerd, want onze data is paired-end dus dan heb je twee reads voor 1 stukje RNA data in dit geval. We pakken hierbij een sample van 100000 reads random met een seed van -s100, zodat er een random keuze wordt gemaakt, maar wel voor allebei dezelfde datasets dezelfde random keuze. 
+
+```{bash}
+seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_1.fastq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq
+
+seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_2.f astq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq
+```
+Nadat we de subset hadden aangemaakt moesten we nog de quality control doen. We kwamen op 2 tools die we daarvoor nodig hadden. Eerst moesten we op elk van onze data de fastqc gebruiken. Hieruit komen verschillende outputs, een zip file en een html file. Om alle data met elkaar te kunnen vergelijken hebben we ook multiqc nodig die 1 report maakt van alle reports. Als je beide tools nog niet gedownload hebt, kun je dat hiermee doen:
+
+fastqc:
+https://github.com/s-andrews/FastQC/blob/master/INSTALL.md
+multiqc:
+https://github.com/MultiQC/MultiQC
+
+
+Voor fastqc hebben we deze commando gebruikt:
+```{bash}
+fastqc command: fastqc *.fastq.gz -o fastqc_all
+```
+
+En voor multiqc (nog niet gebruikt want fastqc was nog niet klaar, maar moeten we deze gebruiken.)
+```{bash}
+multiqc command: multiqc fastqc_all -o multiqc_report
+```
+
+Ook hebben we vastgesteld dat we voor de volgende stap STAR nodig hebben die mapt als het ware de RNA sequenties op een referentie genoom. En hebben we een mogelijk argument hiervoor al gevonden.
+
+making a STAR genome index: STAR --runThreadN 8 --runMode genomeGenerate --genomeDir genome_index --genomeFastaFiles GRCh38.fa --sjdbGTFfile annotation.gtf --sjdbOverhang 100
+Loop on alle STAR samples te doorlopen: for f in *R1.fastq.gz; do base=(basename "$f" _R1.fastq.gz); STAR --runThreadN 8 --genomeDir genome_index --readFilesIn ${base}_R1.fastq.gz ${base}_R2.fastq.gz --readFilesCommand zcat --outFileNamePrefix star_outputs/{base}_ --outSAMtype BAM SortedByCoordinate; done
+
+#### Bestanden aangepast:
+used_commands - git repo (online)
+logboek_tristan_gen_trans.Rmd (lokaal)
+
+#### Resultaten/stand van zaken:
+We hebben fastqc gerunned alleen we hebben nog niet multiqc kunnen runnen want fastqc was nog niet klaar. Ook hebben we een subset gemaakt en hebben we d.m.v. het commando head -10, de regels van beide ends met elkaar vergeleken, want het is paired-end.
+
+subset_1 head:
+
+subset_2 head:
+
+
+#### Conclusie en vervolgstappen:
+We moeten nu bezig gaan met de volgende stap in onze pipeline en dat is star, ook moeten we daadwerkelijk nog multiqc runnen en dan kijken naar de report en eventueel bepaalde data weglaten of nog een trim stap uitvoeren.
+
+
+### 07/09/2026
+
+#### Doel:
+
+
+
+#### Motivatie:
+
+
+
+#### Werkzaamheden:
+
+
+
+#### Bestanden aangepast:
+
+
+
+#### Resultaten/stand van zaken:
+
+
+
+#### Conclusie en vervolgstappen:

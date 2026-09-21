@@ -12,6 +12,12 @@ find /students/2026-2027/Thema05/plantanalysegroep2/SRA -name "*.sra" | \
 
 
 
+SUBSET aanmaken
+
+seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_1.fastq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq
+seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_2.f astq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq
+
+
 QUALITY CONTROL
 fastqc command: fastqc *.fastq.gz -o fastqc_all
 multiqc command: multiqc fastqc_all -o multiqc_report

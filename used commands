@@ -22,10 +22,10 @@ fastqc command: fastqc *.fastq.gz -o fastqc_all
 multiqc command: multiqc fastqc_all -o multiqc_report
 
 
-cat /homes/tjdkruithof/bin-jaar-2/blok-1-genomics-transcriptomics/PlantAnalyse/data/SRR_Acc_List.txt | \
+cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
   parallel TrimmomaticPE \
-  /students/2026-2027/Thema05/plantanalysegroep2/subset/{}_1.fq \
-  /students/2026-2027/Thema05/plantanalysegroep2/subset/{}_2.fq \
+  /students/2026-2027/Thema05/plantanalysegroep2/fastq/{}_1.fastq \
+  /students/2026-2027/Thema05/plantanalysegroep2/fastq/{}_2.fastq \
   /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_1P.fastq \
   /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_1U.fastq \
   /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_2P.fastq \

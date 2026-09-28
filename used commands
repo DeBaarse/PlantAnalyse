@@ -34,10 +34,16 @@ cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
 
 
 
-
-
 STAR
-making a STAR genome index: STAR --runThreadN 8 --runMode genomeGenerate --genomeDir genome_index --genomeFastaFiles GRCh38.fa --sjdbGTFfile annotation.gtf --sjdbOverhang 100
+Make STAR genome index first: 
+STAR --runThreadN 4 \
+     --runMode genomeGenerate \
+     --genomeDir ./star_index_arabidopsis \
+     --genomeFastaFiles arabidopsis_thaliana_tair10_rev56.fasta \
+     --sjdbGTFfile annotation_ara_tha.gtf \
+     --sjdbOverhang 149 \
+     --genomeSAindexNbases 13
+
 Loop on alle STAR samples te doorlopen: for f in *R1.fastq.gz; do base=(basename "$f" _R1.fastq.gz); STAR --runThreadN 8 --genomeDir genome_index --readFilesIn ${base}_R1.fastq.gz ${base}_R2.fastq.gz --readFilesCommand zcat --outFileNamePrefix star_outputs/{base}_ --outSAMtype BAM SortedByCoordinate; done
 
 SAMTOOLS

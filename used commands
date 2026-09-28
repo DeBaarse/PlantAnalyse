@@ -39,8 +39,8 @@ Make STAR genome index first:
 STAR --runThreadN 4 \
      --runMode genomeGenerate \
      --genomeDir ./star_index_genoom \
-     --genomeFastaFiles arabidopsis_thaliana_tair10_rev56.fasta \
-     --sjdbGTFfile annotation_ara_tha.gtf \
+     --genomeFastaFiles GCF_000001735.4_TAIR10.1_genomic.fna \
+     --sjdbGTFfile genomic.gtf \
      --sjdbOverhang 149 \
      --genomeSAindexNbases 13
 

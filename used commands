@@ -34,7 +34,7 @@ cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
 
 
 
-STAR
+STAR - version=2.7.11b
 Make STAR genome index first: 
 STAR --runThreadN 4 \
      --runMode genomeGenerate \

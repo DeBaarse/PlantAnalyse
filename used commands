@@ -38,7 +38,7 @@ STAR
 Make STAR genome index first: 
 STAR --runThreadN 4 \
      --runMode genomeGenerate \
-     --genomeDir ./star_index_arabidopsis \
+     --genomeDir ./star_index_genoom \
      --genomeFastaFiles arabidopsis_thaliana_tair10_rev56.fasta \
      --sjdbGTFfile annotation_ara_tha.gtf \
      --sjdbOverhang 149 \

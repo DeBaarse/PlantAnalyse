@@ -45,6 +45,14 @@ STAR --runThreadN 4 \
      --genomeSAindexNbases 12
 
 Loop on alle STAR samples te doorlopen: for f in *R1.fastq.gz; do base=(basename "$f" _R1.fastq.gz); 
+GEBRUIK DIT OP ALLES: 
+/usr/lib/rna-star/bin/STAR-avx2 --runThreadN 8 --genomeDir /students/2026-2027/Thema05/plantanalysegroep2/STAR/star_index_genoom 
+--readFilesIn /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq 
+--outFileNamePrefix Subset_output --outSAMtype BAM SortedByCoordinate
+
+
+
+
 STAR --runThreadN 8 --genomeDir genome_index --readFilesIn ${base}_R1.fastq.gz ${base}_R2.fastq.gz 
 --readFilesCommand zcat --outFileNamePrefix star_outputs/{base}_ --outSAMtype BAM SortedByCoordinate; 
 

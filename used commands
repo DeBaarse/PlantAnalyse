@@ -61,6 +61,7 @@ SAMTOOLS
 Samtools index: samtools index sample_Aligned.sortedByCoord.out.bam
 (dit samtools code moet in de for loop van de star aan het einde, anders wordt er helemaal niets geïndexeerd (of alleen het allerlaatste sample), waardoor fr BCFtools-stap alsnog mislukt.
 )
+
 BCFTOOLS
 bcftools mpileup: 
 bcftools mpileup \
@@ -89,7 +90,8 @@ bcftools mpileup -f GCF_000001735.4_TAIR10.1_genomic.fna star_outputs/*.bam | \
 bcftools call -mv -Ov -o alle_samples.raw.vcf
 ```
 
-(*) Dit zorgt ervoor dat BCFtools alle BAM-bestanden in die map in één keer tegelijk inleest en analyseert.
-
+filtering:
+```
 bcftools filter -i "QUAL>=30 && DP>=10" alle_samples.raw.vcf -o alle_samples.filtered.vcf
+```
 

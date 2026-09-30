@@ -21,7 +21,7 @@ QUALITY CONTROL
 fastqc command: fastqc *.fastq.gz -o fastqc_all
 multiqc command: multiqc fastqc_all -o multiqc_report
 
-
+TRIMMOMATIC
 cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
   parallel TrimmomaticPE \
   /students/2026-2027/Thema05/plantanalysegroep2/fastq/{}_1.fastq \

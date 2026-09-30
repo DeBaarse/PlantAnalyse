@@ -60,9 +60,11 @@ STAR --runThreadN 8 --genomeDir genome_index --readFilesIn ${base}_R1.fastq.gz $
 
 SAMTOOLS
 ?????Daarna nog een keer multiQC
-Samtools index: samtools index sample_Aligned.sortedByCoord.out.bam
 (dit samtools code moet in de for loop van de star aan het einde, anders wordt er helemaal niets geïndexeerd (of alleen het allerlaatste sample), waardoor fr BCFtools-stap alsnog mislukt.
 )
+for bam in ../STAR/star_outputs/*.bam; do
+    samtools index "$bam"
+done
 
 BCFTOOLS
 bcftools mpileup: 

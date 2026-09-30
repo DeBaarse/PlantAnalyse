@@ -32,6 +32,8 @@ cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
   /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_2U.fastq \
   ILLUMINACLIP:/students/2026-2027/Thema05/plantanalysegroep2/Trimmomatic/Trimmomatic-0.41/adapters/TruSeq3-PE-2.fa:2:30:10 
 
+for f1 in /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/*_1.fq; do f2="${f1%_1.fq}_2.fq"; prefix=$(basename "${f1%_1.fq}"); /usr/lib/rna-star/bin/STAR-avx2 
+--runThreadN 8 --genomeDir /students/2026-2027/Thema05/plantanalysegroep2/STAR/star_index_genoom --readFilesIn "$f1" "$f2" --outFileNamePrefix "${prefix}_" --outSAMtype BAM SortedByCoordinate
 
 
 STAR - version=2.7.11b
@@ -45,7 +47,7 @@ STAR --runThreadN 4 \
      --genomeSAindexNbases 12
 
 Loop on alle STAR samples te doorlopen: for f in *R1.fastq.gz; do base=(basename "$f" _R1.fastq.gz); 
-GEBRUIK DIT OP ALLES: 
+GEBRUIK DIT OP ALLES:   
 /usr/lib/rna-star/bin/STAR-avx2 --runThreadN 8 --genomeDir /students/2026-2027/Thema05/plantanalysegroep2/STAR/star_index_genoom 
 --readFilesIn /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq 
 --outFileNamePrefix Subset_output --outSAMtype BAM SortedByCoordinate

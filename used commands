@@ -83,4 +83,5 @@ bcftools call -mv -Ov -o alle_samples.raw.vcf
 
 (*) Dit zorgt ervoor dat BCFtools alle BAM-bestanden in die map in één keer tegelijk inleest en analyseert.
 
+bcftools filter -i "QUAL>=30 && DP>=10" alle_samples.raw.vcf -o alle_samples.filtered.vcf
 

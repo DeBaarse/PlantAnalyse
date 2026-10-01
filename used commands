@@ -10,7 +10,15 @@ find /students/2026-2027/Thema05/plantanalysegroep2/SRA -name "*.sra" | \
   parallel 'fasterq-dump -O /students/2026-2027/Thema05/plantanalysegroep2/fastq -t /students/2026-2027/Thema05/plantanalysegroep2/temp {}'
 ```
 
+SAMTOOLS
 
+MARKDUP
+
+samtools collate -@ 4 -O -u example.bam | samtools fixmate -@ 4 -m -u - - | samtools sort -@ 4 -u - | samtools markdup -@ 4 - markdup.bam
+samtools collate -o namecollate.bam example.bam
+samtools fixmate -m namecollate.bam fixmate.bam
+samtools sort -o positionsort.bam fixmate.bam
+samtools markdup positionsort.bam markdup.bam
 
 SUBSET aanmaken
 

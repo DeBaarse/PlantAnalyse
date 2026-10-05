@@ -14,11 +14,35 @@ SAMTOOLS
 
 MARKDUP
 
-samtools collate -@ 4 -O -u example.bam | samtools fixmate -@ 4 -m -u - - | samtools sort -@ 4 -u - | samtools markdup -@ 4 - markdup.bam
 samtools collate -o namecollate.bam example.bam
 samtools fixmate -m namecollate.bam fixmate.bam
 samtools sort -o positionsort.bam fixmate.bam
 samtools markdup positionsort.bam markdup.bam
+
+samtools collate -@ 4 -O -u example.bam | samtools fixmate -@ 4 -m -u - - | samtools sort -@ 4 -u - | samtools markdup -@ 4 - markdup.bam
+
+
+Whole dataset:
+
+#!/bin/bash
+# Loop over all STAR output BAM files
+for bam in SRR*_Aligned.sortedByCoord.out.bam; do
+    # Extract just the SRA ID (e.g. SRR123456 from SRR123456_Aligned.sortedByCoord.out.bam)
+    sample=$(basename "$bam" _Aligned.sortedByCoord.out.bam)
+    echo "=================================================="
+    echo "Marking duplicates with samtools for: $sample"
+    echo "Input: $bam"
+    echo "=================================================="
+    # 1. Collate -> 2. Fixmate (adds mate score tags) -> 3. Sort -> 4. Mark duplicates
+    samtools collate -u -O "$bam" | \
+    samtools fixmate -m -u - - | \
+    samtools sort -u -@ 4 - | \
+    samtools markdup -@ 4 - "${sample}_markdup.bam"
+    # 5. Index the marked BAM file
+    samtools index "${sample}_markdup.bam"
+    echo "Finished $sample -> ${sample}_markdup.bam"
+done
+
 
 SUBSET aanmaken
 

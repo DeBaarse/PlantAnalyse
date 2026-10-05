@@ -149,4 +149,11 @@ filtering:
 ```
 bcftools filter -i "QUAL>=30 && DP>=10" alle_samples.raw.vcf -o alle_samples.filtered.vcf
 ```
+bcftools csq \
+  --force \
+  -f ../STAR/GCF_000001735.4_TAIR10.1_genomic.fna \
+  -g ../annotatie/genomic.gff.gz \
+  -O z \
+  -o subset_samples.annotated.vcf.gz \
+  alle_samples.filtered.vcf
 

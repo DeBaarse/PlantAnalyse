@@ -23,25 +23,43 @@ samtools collate -@ 4 -O -u example.bam | samtools fixmate -@ 4 -m -u - - | samt
 
 
 Whole dataset:
+#!/bin/bash
+OUTDIR="markdup_results"
+mkdir -p "$OUTDIR"
+
 
 #!/bin/bash
-# Loop over all STAR output BAM files
+# Een aparte output file
+OUTDIR="markdup_results"
+mkdir -p "$OUTDIR"
+
+# Loop door alle STAR BAM-bestanden in de huidige map
 for bam in SRR*_Aligned.sortedByCoord.out.bam; do
-    # Extract just the SRA ID (e.g. SRR123456 from SRR123456_Aligned.sortedByCoord.out.bam)
+    # Check of het bestand daadwerkelijk bestaat (voor het geval er geen match is)
+    [ -e "$bam" ] || continue
+
+    # Haal alleen het SRR-nummer op (stript de STAR-extensie)
     sample=$(basename "$bam" _Aligned.sortedByCoord.out.bam)
+
     echo "=================================================="
-    echo "Marking duplicates with samtools for: $sample"
-    echo "Input: $bam"
+    echo "Bezig met sample: $sample"
+    echo "Input : $bam"
+    echo "Output: $OUTDIR/${sample}_markdup.bam"
     echo "=================================================="
-    # 1. Collate -> 2. Fixmate (adds mate score tags) -> 3. Sort -> 4. Mark duplicates
+
+    # Pijplijn naar de outputmap, hierdoor komen er geen tussen bestanden.
     samtools collate -u -O "$bam" | \
     samtools fixmate -m -u - - | \
     samtools sort -u -@ 4 - | \
-    samtools markdup -@ 4 - "${sample}_markdup.bam"
-    # 5. Index the marked BAM file
-    samtools index "${sample}_markdup.bam"
-    echo "Finished $sample -> ${sample}_markdup.bam"
+    samtools markdup -@ 4 - "$OUTDIR/${sample}_markdup.bam"
+
+    # Indexeer de BAM in de outputmap (maakt .bam.bai aan)
+    samtools index "$OUTDIR/${sample}_markdup.bam"
+
+    echo "Klaar zo met $sample!"
 done
+
+echo "Alles is doorlopen. Resultaten staan in: $OUTDIR"
 
 
 SUBSET aanmaken

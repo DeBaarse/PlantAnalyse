@@ -117,26 +117,6 @@ for bam in ../STAR/star_outputs/*.bam; do
 done
 ```
 
-BCFTOOLS
-bcftools mpileup: 
-bcftools mpileup \
-  -f reference.fa \
-  sample_Aligned.sortedByCoord.out.bam \
-  -O b \
-  -o sample.mpileup.bcf
-bcftools call:
-bcftools call \
-  -m \
-  -v \
-  -O v \
-  -o sample.vcf \
-  sample.mpileup.bcf
-bcftools filter:
-bcftools filter \
-  -i 'QUAL>=30 && DP>=10' \
-  -o sample.filtered.vcf \
-  sample.vcf
-?????Misschien multiQC
 code: 
 
 variant-calling:

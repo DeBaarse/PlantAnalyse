@@ -27,18 +27,17 @@ Whole dataset:
 OUTDIR="markdup_results"
 mkdir -p "$OUTDIR"
 
-
 #!/bin/bash
-# Een aparte output file
+# maak een output mapje aan als die nog niet bestaat
 OUTDIR="markdup_results"
 mkdir -p "$OUTDIR"
 
 # Loop door alle STAR BAM-bestanden in de huidige map
 for bam in SRR*_Aligned.sortedByCoord.out.bam; do
-    # Check of het bestand daadwerkelijk bestaat (voor het geval er geen match is)
+    # Check of het bestand daadwerkelijk bestaat.
     [ -e "$bam" ] || continue
 
-    # Haal alleen het SRR-nummer op (stript de STAR-extensie)
+    # strip de star extensie en assign het aan een variabel
     sample=$(basename "$bam" _Aligned.sortedByCoord.out.bam)
 
     echo "=================================================="
@@ -53,7 +52,7 @@ for bam in SRR*_Aligned.sortedByCoord.out.bam; do
     samtools sort -u -@ 4 - | \
     samtools markdup -@ 4 - "$OUTDIR/${sample}_markdup.bam"
 
-    # Indexeer de BAM in de outputmap (maakt .bam.bai aan)
+    # Indexeer gelijk het markdup bestand
     samtools index "$OUTDIR/${sample}_markdup.bam"
 
     echo "Klaar zo met $sample!"

@@ -29,7 +29,7 @@ mkdir -p "$OUTDIR"
 
 #!/bin/bash
 # maak een output mapje aan als die nog niet bestaat
-OUTDIR="markdup_results"
+OUTDIR="../markdup_results"
 mkdir -p "$OUTDIR"
 
 # Loop door alle STAR BAM-bestanden in de huidige map
@@ -39,6 +39,13 @@ for bam in SRR*_Aligned.sortedByCoord.out.bam; do
 
     # strip de star extensie en assign het aan een variabel
     sample=$(basename "$bam" _Aligned.sortedByCoord.out.bam)
+    final_bam="$OUTDIR/${sample}_markdup.bam"
+
+    #Sla al bestaande bestanden over
+    if [ -s "$final_bam" ] && [ -e "${final_bam}.bai" ]; then
+      echo "Al gedaan: $sample"
+      continue
+    fi
 
     echo "=================================================="
     echo "Bezig met sample: $sample"

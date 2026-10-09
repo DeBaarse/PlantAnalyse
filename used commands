@@ -24,10 +24,6 @@ samtools collate -@ 4 -O -u example.bam | samtools fixmate -@ 4 -m -u - - | samt
 
 Whole dataset:
 #!/bin/bash
-OUTDIR="markdup_results"
-mkdir -p "$OUTDIR"
-
-#!/bin/bash
 # maak een output mapje aan als die nog niet bestaat
 OUTDIR="../markdup_results"
 mkdir -p "$OUTDIR"

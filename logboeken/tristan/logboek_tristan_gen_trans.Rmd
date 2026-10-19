@@ -321,6 +321,31 @@ subset_2 head:
 We moeten nu bezig gaan met de volgende stap in onze pipeline en dat is star, ook moeten we daadwerkelijk nog multiqc runnen en dan kijken naar de report en eventueel bepaalde data weglaten of nog een trim stap uitvoeren.
 
 
+### 05/10/2026
+
+#### Doel:
+
+
+
+#### Motivatie:
+
+
+
+#### Werkzaamheden:
+
+
+
+#### Bestanden aangepast:
+
+
+
+#### Resultaten/stand van zaken:
+
+
+
+#### Conclusie en vervolgstappen:
+
+
 ### 07/09/2026
 
 #### Doel:
@@ -344,3 +369,4 @@ We moeten nu bezig gaan met de volgende stap in onze pipeline en dat is star, oo
 
 
 #### Conclusie en vervolgstappen:
+

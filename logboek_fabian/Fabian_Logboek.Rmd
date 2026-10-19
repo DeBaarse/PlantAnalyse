@@ -9,7 +9,7 @@ output: html_document
 #Introductie
 In het onderzoek dat we willen nabootsten word gekeken naar welke genen invloed hebben op de pseudotime van planten. 
 Gezien wij korter de tijd hebben dan de onderzoekers gaan we een gedeelte van hun onderzoek proberen na te bootsen, 
-waarbij we uiteindlijk wat willen zeggen over de genetische variaties in onze data.
+waarbij we uiteindelijk wat willen zeggen over de genetische variaties in onze data.
 
 Hierbij willen we de volgende tools gebruiken, in deze volgorde:
 - fastqc v0.12.1
@@ -25,12 +25,12 @@ en dan uiteindelijk een analyse in R
 
 
 ## Onderzoeksvraag
-Welke genetische variaties zijn aanwezig in de Arabidposis thaliana die een significante invloed hebben op de desbetreffende genen
+Welke genetische variaties zijn aanwezig in de Arabidopsis thaliana die een significante invloed hebben op de desbetreffende genen
 
 ## Data
 Artikel waarop onze pipeline is gebaseerd: https://pubmed.ncbi.nlm.nih.gov/39121073/ 
 Waar data van paper staat: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE242681
-Deze data bevat foward en reverse reads van 71 organismens van de Arabidposis thaliana
+Deze data bevat forward en reverse reads van 71 organismens van de Arabidposis thaliana
 
 Onze data staat opgeslagen onder: "/students/2026-2027/Thema05/plantanalysegroep2"
 Github: https://github.com/DeBaarse/PlantAnalyse/tree/main/data
@@ -39,7 +39,7 @@ Github: https://github.com/DeBaarse/PlantAnalyse/tree/main/data
 
 # 13-09-2026
 Doel: Begrijpen van artikel, en begin maken aan presentatie
-Motivatie: Om een plan van aan pak te maken is er genoeg kennis nodig van het artikel
+Motivatie: Om een plan van aanpak te maken is er genoeg kennis nodig van het artikel
 Werkzaamheden: Artikel gelezen en waar nodig extra informatie bijgezocht online. Begonnen met het verwerken van deze informatie in de plan van aanpak. 
 
 Resultaten: Start gemaakt aan PVA
@@ -65,7 +65,7 @@ seqtk sample /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_1.
 ```
 
 Dit command maakt een subset aan van 100000 reads
-Echter hadden de samples zowel een forward als reverse read, hierom moeten er twee subsets gemaakt worden. Om te zorgen dat deze matchen moet een seed gebruikt worden. Daarvoor is de command opnieuw gerunned voor beide versies.
+Echter hadden de samples zowel een forward als reverse read, hierom moeten er twee subsets gemaakt worden. Om te zorgen dat deze matchen moet een seed gebruikt worden. Daarvoor is de command opnieuw uitgevoerd voor beide versies.
 
 ```{bash, eval = FALSE}
 seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_1.fastq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq
@@ -75,15 +75,15 @@ seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946
 
 Hiermee maakte we nogmaals twee subsets van 100000 reads, echters is nu ook de seed meegegeven aan de hand van de -s100
 
-Verder heb ik ook alvast gekeken naar hoe later variant calling moet worden gerunned.
+Verder heb ik ook alvast gekeken naar hoe later variant calling moet worden uitgevoerd.
 
 Resultaten: Twee subsets zijn aangemaakt, 1 voor de forward en 1 voor de reverse 
 Analyse van resultaten: De subsets zijn correct aangemaakt en lijken goed na het bekijken van de inhoud
-Conclusie: De subsets zijn klaar voor gebruik, al moeten deze nog wel met fastqc gecontroleerd worden op de qualiteit van de data
+Conclusie: De subsets zijn klaar voor gebruik, al moeten deze nog wel met fastqc gecontroleerd worden op de kwaliteit van de data
 
 # 23-09-2026
-Doel: Controleren van qualiteit van data
-Motivatie: Voordat de data verwerkt kan worden moet de qualiteit van de data gecheckt worden
+Doel: Controleren van kwaliteit van data
+Motivatie: Voordat de data verwerkt kan worden moet de kwaliteit van de data gecheckt worden
 Werkzaamheden: Zowel fastqc als multiqc zijn gerunt door mohammed, kijk hiervoor in zijn logboek. Echter is er iets fout met de huidige geinstaleerde multiqc, wat ervoor zorgt dat er geen grafieken worden gegenereerde. Hiervoor is een nieuwe installatie nodig. Dit is gedaan om een virtual environment met de volgende commandos:
 
 ```{bash, eval = FALSE}
@@ -102,7 +102,7 @@ Na installatie is multiqc gerunt met het volgende commando
 multiqc .
 ```
 
-Dit command werd gerunned in de map waar de fastqc bestanden opgeslagen staan. Een punt "." zorgt ervoor dat multiqc op alle bestanden in deze map wordt gerunned
+Dit command werd uitgevoerd in de map waar de fastqc bestanden opgeslagen staan. Een punt "." zorgt ervoor dat multiqc op alle bestanden in deze map wordt uitgevoerd.
 
 Hieruit bleek dat er een groot aantal repeated sequences in de reads zaten (80%). Ook bleek dat er nog adapters in de reads zaten.
 
@@ -115,7 +115,7 @@ Conclusie: Volgende stap is om trimmomatic uit te voeren op de subset voordat er
 
 # 25-09-2026
 Doel: Uitvoeren van trimmomatic op subset en dataset
-Motivatie: Het verbeteren van de qualiteit van de reads
+Motivatie: Het verbeteren van de kwaliteit van de reads
 Werkzaamheden: De eerste twee uur zijn besteed aan het proberen installeren van trimmomatic. Hiervoor is de volgende commando gebruikt:
 
 ```{bash, eval = FALSE}
@@ -156,7 +156,7 @@ TrimmomaticPE \
 
 Hier zijn de eerste twee lijnen de input files, forward en reverse, de volgende 4 lijnen zijn de outputs en de laatste lijn verwijderd de adapters nog aanwezig in de reads
 
-Vervolgens is hier weer fastqc en multiqc opgerunnt om te kijken of de qualiteit is verbetert
+Vervolgens is hier weer fastqc en multiqc opgerunnt om te kijken of de kwaliteit is verbetert
 
 ```{bash, eval = FALSE}
 cd trimmed-fastq/
@@ -166,7 +166,7 @@ source myenv/bin/activate
 multiqc .
 ```
 
-Hieruit kwam dat na uitvoering van trimmomatic de qualiteit zeer was verbetert en het aantal repeated sequences ver was afgezakt. Daarom kan deze nu ook worden uitgevoerd op de complete dataset. Hiervoor gebruiken we het volgende command om deze aantezetten, zodat hij gedurende het weekend kan runnen:
+Hieruit kwam dat na uitvoering van trimmomatic de adapters waren verwijderd en de subset duplicate reads onder de 20% ligt. Daarom kan deze nu ook worden uitgevoerd op de complete dataset. Hiervoor gebruiken we het volgende command om deze aantezetten, zodat hij gedurende het weekend kan runnen:
 
 ```{bash, eval = FALSE}
 cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
@@ -180,10 +180,10 @@ cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
   ILLUMINACLIP:/students/2026-2027/Thema05/plantanalysegroep2/Trimmomatic/Trimmomatic-0.41/adapters/TruSeq3-PE-2.fa:2:30:10
 ```
 
-Dit doet inprincipe hetzelfde als de commando voor de subset, alleen hierbij leest de eerste regels de accesion lijst in, en aan de hand van parallel voert hij vervolgens de trimmomatic tegerlijketijd uit op alle lijnen in deze lijst.
+Dit doet inprincipe hetzelfde als de commando voor de subset, alleen hierbij leest de eerste regels de accession lijst in, en aan de hand van parallel voert hij vervolgens de trimmomatic tegerlijketijd uit op alle lijnen in deze lijst.
 
 
-Resultaten: Uit de multiqc rapport is gebleken dat trimmomatic de qualiteit van de data voldoende heeft verbeterd om mee verder te gaan
+Resultaten: Uit de multiqc rapport is gebleken dat trimmomatic de kwaliteit van de data voldoende heeft verbeterd om mee verder te gaan
 Analyse van resultaten: De resultaten toonden aan dat we verder kunnen op de gehele dataset, dus is deze aangezet
 Conclusie: Trimmomatic zal volgende les klaar moeten zijn
 
@@ -193,7 +193,7 @@ Motivatie: De volgende stap is het mappen van onze data, dus wordt dit commando 
 Werkzaamheden: 
 Na het checken van de trimmomatic is gebleken dat deze niet is uitgevoerd op de gehele datset, omdat deze teveel geheugen in gebruik nam. Om te voorkomen dat dit nogmaals gebeurd is onze dataset opgesplits in 5 lijsten, waarvan elk 15 sets aan forward en reverse reads bevat, behalve de laatste, want hier zijn nog maar 11 over. Vervolgens is het commando van vorige keer gerunnt op elk van de 5 nieuwe lijsten, stuk voor stuk.
 
-Vervolgens is ook hierop fastqc en multiqc gerunnt om te kijken of de qualiteit nu goed is om mee verder te gaan.
+Vervolgens is ook hierop fastqc en multiqc gerunnt om te kijken of de kwaliteit nu goed is om mee verder te gaan.
 
 De volgende stap is het mappen van de data. Hiervoor hebben we star gebruikt op onze subset op het commando te controleren:
 
@@ -232,7 +232,7 @@ Dit gaf de volgende output:
 
 Resultaten: De commandos werken en lijken goed uitgevoerd te zijn. dus kan dit nu ook op de dataset gerunnt worden
 Analyse van resultaten: De commandos kunnen dus nu ook op de dataset gerunnt worden
-Conclusie: De allingment was een success op de subset. Deze kan nu ook op de dataset worden gerunnt.
+Conclusie: De allingment lijkt succesfol uitgevoerd te zijn op de subset. Deze kan nu ook op de dataset worden uitgevoerd.
 
 
 # 05-10-2026

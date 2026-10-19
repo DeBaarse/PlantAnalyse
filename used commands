@@ -111,31 +111,30 @@ STAR --runThreadN 8 --genomeDir genome_index --readFilesIn ${base}_R1.fastq.gz $
 --readFilesCommand zcat --outFileNamePrefix star_outputs/{base}_ --outSAMtype BAM SortedByCoordinate; 
 
 SAMTOOLS
-?????Daarna nog een keer multiQC
-(dit samtools code moet in de for loop, anders wordt er helemaal niets geïndexeerd (of alleen het allerlaatste sample), waardoor fr BCFtools-stap alsnog mislukt.)
-```
-for bam in ../STAR/star_outputs/*.bam; do
-    samtools index "$bam"
-done
-```
+Daarna nog een keer multiQC:
+Samtools index: samtools index sample_Aligned.sortedByCoord.out.bam
+(dit samtools code moet in de for loop van de star aan het einde, anders wordt er helemaal niets geïndexeerd (of alleen het allerlaatste sample), waardoor fr BCFtools-stap alsnog mislukt.
+) 
+of nieuwe for loop voor samtools
+BCFTOOLS
+bcftools mpileup: 
+bcftools mpileup \
+  -f reference.fa \
+  sample_Aligned.sortedByCoord.out.bam \
+  -O b \
+  -o sample.mpileup.bcf
+bcftools call:
+bcftools call \
+  -m \
+  -v \
+  -O v \
+  -o sample.vcf \
+  sample.mpileup.bcf
+bcftools filter:
+bcftools filter \
+  -i 'QUAL>=30 && DP>=10' \
+  -o sample.filtered.vcf \
+  sample.vcf
+?????Misschien multiQC
 
-code: 
-
-variant-calling:
-```
-bcftools mpileup -f GCF_000001735.4_TAIR10.1_genomic.fna star_outputs/*.bam | \
-bcftools call -mv -Ov -o alle_samples.raw.vcf
-```
-
-filtering:
-```
-bcftools filter -i "QUAL>=30 && DP>=10" alle_samples.raw.vcf -o alle_samples.filtered.vcf
-```
-bcftools csq \
-  --force \
-  -f ../STAR/GCF_000001735.4_TAIR10.1_genomic.fna \
-  -g ../annotatie/genomic.gff.gz \
-  -O z \
-  -o subset_samples.annotated.vcf.gz \
-  alle_samples.filtered.vcf
 

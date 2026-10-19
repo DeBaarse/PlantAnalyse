@@ -1,0 +1,288 @@
+---
+title: "Logboek Fabian"
+author: "F Kinds"
+date: "19-10-2026"
+output: html_document
+---
+
+
+#Introductie
+In het onderzoek dat we willen nabootsten word gekeken naar welke genen invloed hebben op de pseudotime van planten. 
+Gezien wij korter de tijd hebben dan de onderzoekers gaan we een gedeelte van hun onderzoek proberen na te bootsen, 
+waarbij we uiteindelijk wat willen zeggen over de genetische variaties in onze data.
+
+Hierbij willen we de volgende tools gebruiken, in deze volgorde:
+- fastqc v0.12.1
+- multiqc v1.35
+- trimmomatic v0.39
+- fastqc v0.12.1
+- multiqc v1.35
+- STAR v2.7.11b
+- Samtools markduplicates v1.23
+- Samtools indexering v1.23
+- bcf tools v1.21
+en dan uiteindelijk een analyse in R
+
+
+## Onderzoeksvraag
+Welke genetische variaties zijn aanwezig in de Arabidopsis thaliana die een significante invloed hebben op de desbetreffende genen
+
+## Data
+Artikel waarop onze pipeline is gebaseerd: https://pubmed.ncbi.nlm.nih.gov/39121073/ 
+Waar data van paper staat: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE242681
+Deze data bevat forward en reverse reads van 71 organismens van de Arabidposis thaliana
+
+Onze data staat opgeslagen onder: "/students/2026-2027/Thema05/plantanalysegroep2"
+Github: https://github.com/DeBaarse/PlantAnalyse/tree/main/data
+
+
+
+# 13-09-2026
+Doel: Begrijpen van artikel, en begin maken aan presentatie
+Motivatie: Om een plan van aanpak te maken is er genoeg kennis nodig van het artikel
+Werkzaamheden: Artikel gelezen en waar nodig extra informatie bijgezocht online. Begonnen met het verwerken van deze informatie in de plan van aanpak. 
+
+Resultaten: Start gemaakt aan PVA
+Analyse van resultaten: Artikel nogmaals doornemen om zeker te zijn dat PVA correct is
+Conclusie: Artikel is af en toe wat moeilijk, dus deze moet nogmaals goed doorgenomen worden
+
+
+
+
+# 21-09-2026
+Doel: Aanmaken subset
+Motivatie: Een subset is nodig om stappen te testen, voordat deze op de complete dataset kan worden uitgevoerd
+Werkzaamheden: Voordat er iets gedaan kan worden moet de data gedownload worden, kijk hiervoor in tristans logboek. Om een subset te maken is hier een programma voor nodig. Wij hebben gekozen om hier seqtk voor te gebruiken. Deze is gedownload vanaf de git pagina: https://github.com/lh3/seqtk. Hiervoor is het volgende command gebruikt:
+
+```{bash, eval = FALSE}
+git clone https://github.com/lh3/seqtk.git
+```
+
+Vervolgens is het volgende command gerunt om een subset te maken
+
+```{bash, eval = FALSE}
+seqtk sample /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_1.fastq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset.fq
+```
+
+Dit command maakt een subset aan van 100000 reads
+Echter hadden de samples zowel een forward als reverse read, hierom moeten er twee subsets gemaakt worden. Om te zorgen dat deze matchen moet een seed gebruikt worden. Daarvoor is de command opnieuw uitgevoerd voor beide versies.
+
+```{bash, eval = FALSE}
+seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_1.fastq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq
+
+seqtk sample -s100 /students/2026-2027/Thema05/plantanalysegroep2/fastq/SRR25946555_2.fastq 100000 > /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq
+```
+
+Hiermee maakte we nogmaals twee subsets van 100000 reads, echters is nu ook de seed meegegeven aan de hand van de -s100
+
+Verder heb ik ook alvast gekeken naar hoe later variant calling moet worden uitgevoerd.
+
+Resultaten: Twee subsets zijn aangemaakt, 1 voor de forward en 1 voor de reverse 
+Analyse van resultaten: De subsets zijn correct aangemaakt en lijken goed na het bekijken van de inhoud
+Conclusie: De subsets zijn klaar voor gebruik, al moeten deze nog wel met fastqc gecontroleerd worden op de kwaliteit van de data
+
+# 23-09-2026
+Doel: Controleren van kwaliteit van data
+Motivatie: Voordat de data verwerkt kan worden moet de kwaliteit van de data gecheckt worden
+Werkzaamheden: Zowel fastqc als multiqc zijn gerunt door mohammed, kijk hiervoor in zijn logboek. Echter is er iets fout met de huidige geinstaleerde multiqc, wat ervoor zorgt dat er geen grafieken worden gegenereerde. Hiervoor is een nieuwe installatie nodig. Dit is gedaan om een virtual environment met de volgende commandos:
+
+```{bash, eval = FALSE}
+python3 -m venv myenv
+
+source myenv/bin/activate
+
+pip install multiqc
+```
+
+de eerste lijn maakt de virtual environment aand, de tweede stap activeert vervolgens de virtual enviromnet en met de derde stap wordt multiqc gedowload
+
+Na installatie is multiqc gerunt met het volgende commando
+
+```{bash, eval = FALSE}
+multiqc .
+```
+
+Dit command werd uitgevoerd in de map waar de fastqc bestanden opgeslagen staan. Een punt "." zorgt ervoor dat multiqc op alle bestanden in deze map wordt uitgevoerd.
+
+Hieruit bleek dat er een groot aantal repeated sequences in de reads zaten (80%). Ook bleek dat er nog adapters in de reads zaten.
+
+
+Resultaten: Multiqc is succesvol gerunnt en bekeken. Hieruit bleek dat het nodig is om de data te trimmen voordat deze verder gebruikt kan worden.
+Analyse van resultaten: Uit de multiqc rapport bleek dat het nodig is om de data te trimmen voordat deze verder gebruikt kan worden.
+Conclusie: Volgende stap is om trimmomatic uit te voeren op de subset voordat er verder gewerekt kan worden met de data.
+
+
+
+# 25-09-2026
+Doel: Uitvoeren van trimmomatic op subset en dataset
+Motivatie: Het verbeteren van de kwaliteit van de reads
+Werkzaamheden: De eerste twee uur zijn besteed aan het proberen installeren van trimmomatic. Hiervoor is de volgende commando gebruikt:
+
+```{bash, eval = FALSE}
+docker pull ghcr.io/usadellab/trimmomatic:v0.41
+```
+
+En aangezien we vergeten waren om fastqc te runnen op de subset is dit ook nog gedaan aan de hand van de volgende commando samen met een multiqc rapport:
+
+```{bash, eval = FALSE}
+fastqc *.fq
+source myenv/bin/activate
+multiqc .
+
+```
+Hiermee wordt fastqc gerunt op alle bestanden die eindigen op .fq
+en wordt hier weer een multiqc bestand van gemaakt
+
+Na het installeren hebben we geprobeerd trimmomatic met het volgende commando te runnen:
+
+```{bash, eval = FALSE}
+java -jar /students/2026-2027/Thema05/plantanalysegroep2/Trimmomatic/Trimmomatic-0.41/trimmomatic-0.41.jar subset_1.fq subset_2.fq
+
+```
+
+Echter gaf dit een java foutmelding, omdat de systemen op een te oude java versie draaien.
+Dit oplossen was veel gedoe geweest, waardoor er is gekozen om een oudere trimmomatic versie te gebruiken die al wel gesinstalleerd stond. Hiermee is het volgende commando gerunnt:
+
+```{bash, eval = FALSE}
+TrimmomaticPE \                                 
+ /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq \
+ /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq \
+ /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/subset_1P.fastq \
+ /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/subset_1U.fastq \
+ /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/subset_2P.fastq \
+ /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/subset_2U.fastq \
+ ILLUMINACLIP:/students/2026-2027/Thema05/plantanalysegroep2/Trimmomatic/Trimmomatic-0.41/adapters/TruSeq3-PE-2.fa:2:30:10
+```
+
+Hier zijn de eerste twee lijnen de input files, forward en reverse, de volgende 4 lijnen zijn de outputs en de laatste lijn verwijderd de adapters nog aanwezig in de reads
+
+Vervolgens is hier weer fastqc en multiqc opgerunnt om te kijken of de kwaliteit is verbetert
+
+```{bash, eval = FALSE}
+cd trimmed-fastq/
+fastqc *.fastq
+
+source myenv/bin/activate
+multiqc .
+```
+
+Hieruit kwam dat na uitvoering van trimmomatic de adapters waren verwijderd en de subset duplicate reads onder de 20% ligt. Daarom kan deze nu ook worden uitgevoerd op de complete dataset. Hiervoor gebruiken we het volgende command om deze aantezetten, zodat hij gedurende het weekend kan runnen:
+
+```{bash, eval = FALSE}
+cat /students/2026-2027/Thema05/plantanalysegroep2/SRR_Acc_List.txt | \
+  parallel TrimmomaticPE \
+  /students/2026-2027/Thema05/plantanalysegroep2/fastq/{}_1.fastq \
+  /students/2026-2027/Thema05/plantanalysegroep2/fastq/{}_2.fastq \
+  /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_1P.fastq \
+  /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_1U.fastq \
+  /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_2P.fastq \
+  /students/2026-2027/Thema05/plantanalysegroep2/trimmed-fastq/{}_2U.fastq \
+  ILLUMINACLIP:/students/2026-2027/Thema05/plantanalysegroep2/Trimmomatic/Trimmomatic-0.41/adapters/TruSeq3-PE-2.fa:2:30:10
+```
+
+Dit doet inprincipe hetzelfde als de commando voor de subset, alleen hierbij leest de eerste regels de accession lijst in, en aan de hand van parallel voert hij vervolgens de trimmomatic tegerlijketijd uit op alle lijnen in deze lijst.
+
+
+Resultaten: Uit de multiqc rapport is gebleken dat trimmomatic de kwaliteit van de data voldoende heeft verbeterd om mee verder te gaan
+Analyse van resultaten: De resultaten toonden aan dat we verder kunnen op de gehele dataset, dus is deze aangezet
+Conclusie: Trimmomatic zal volgende les klaar moeten zijn
+
+# 28-09-2026
+Doel: Checken resultaten trimmomatic en mappen van subset op referentiegenoom
+Motivatie: De volgende stap is het mappen van onze data, dus wordt dit commando eerst getest op de subset
+Werkzaamheden: 
+Na het checken van de trimmomatic is gebleken dat deze niet is uitgevoerd op de gehele datset, omdat deze teveel geheugen in gebruik nam. Om te voorkomen dat dit nogmaals gebeurd is onze dataset opgesplits in 5 lijsten, waarvan elk 15 sets aan forward en reverse reads bevat, behalve de laatste, want hier zijn nog maar 11 over. Vervolgens is het commando van vorige keer gerunnt op elk van de 5 nieuwe lijsten, stuk voor stuk.
+
+Vervolgens is ook hierop fastqc en multiqc gerunnt om te kijken of de kwaliteit nu goed is om mee verder te gaan.
+
+De volgende stap is het mappen van de data. Hiervoor hebben we star gebruikt op onze subset op het commando te controleren:
+
+```{bash, eval = FALSE}
+/usr/lib/rna-star/bin/STAR-avx2 --runThreadN 8 --genomeDir /studen
+ts/2026-2027/Thema05/plantanalysegroep2/STAR/star_index_genoom --readFilesIn /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq /students/20
+26-2027/Thema05/plantanalysegroep2/subset/subset_2.fq --outFileNamePrefix Subset_output --outSAMtype BAM SortedByCoordinate
+       /usr/lib/rna-star/bin/STAR-avx2 --runThreadN 8 --genomeDir /students/2026-2027/Thema05/plantanalysegroep2/STAR/star_index_genoom --readFilesIn /stu
+dents/2026-2027/Thema05/plantanalysegroep2/subset/subset_1.fq /students/2026-2027/Thema05/plantanalysegroep2/subset/subset_2.fq --outFileNamePrefix Subset_
+output --outSAMtype BAM SortedByCoordinate
+```
+
+Daarna is de allingment gecontroleerd met sam tools:
+
+```{bash, eval = FALSE}
+samtools flagstat Subset_outputAligned.sortedByCoord.out.bam
+```
+Dit gaf de volgende output:
+183624 + 0 in total (QC-passed reads + QC-failed reads)
+178704 + 0 primary
+4920 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+183624 + 0 mapped (100.00% : N/A)
+178704 + 0 primary mapped (100.00% : N/A)
+178704 + 0 paired in sequencing
+89352 + 0 read1
+89352 + 0 read2
+178704 + 0 properly paired (100.00% : N/A)
+178704 + 0 with itself and mate mapped
+0 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+(base) 
+
+Resultaten: De commandos werken en lijken goed uitgevoerd te zijn. dus kan dit nu ook op de dataset gerunnt worden
+Analyse van resultaten: De commandos kunnen dus nu ook op de dataset gerunnt worden
+Conclusie: De allingment lijkt succesfol uitgevoerd te zijn op de subset. Deze kan nu ook op de dataset worden uitgevoerd.
+
+
+# 05-10-2026
+Doel: Uittesten annotatie op subset
+Motivatie: De annotatie moet eerst worden uitgetest op de subset om te kijken of het commando naar behoren werkt 
+Werkzaamheden: 
+Annotatie moet worden uitgevoerd op de data, hiervoor gebruiken we bcf tools. Dit wordt gedaan aan de hand van het volgende commando:
+
+```{bash, eval = FALSE}
+bcftools csq \
+  --force \
+  -f /students/2026-2027/Thema05/plantanalysegroep2/STAR/GCF_000001735.4_TAIR10.1_genomic.fna \
+  -g /students/2026-2027/Thema05/plantanalysegroep2/annotatie/genomic.gff.gz \
+  -O z \
+  -o subset_samples.annotated.vcf.gz \
+  /students/2026-2027/Thema05/plantanalysegroep2/STAR_Outputs_Subset/alle_samples.filtered.vcf
+
+```
+Hierin zorgt de eerste lijn --force dat de annotatie ook verder gaat bij eventuele fouten, de tweede lijn is het referentiegenoom, de derde lijn is het annotatie bestand, de vierde lijn het uitvoerformaat, de vijfde lijn het uitvoerbestand en de laatste lijn het invoerbestand
+
+
+Dit gaf echter de volgende foutmelding: Conflicting strand in transcript 59976 . . 2 vs 0. 
+Dit is vervolgens verder opgepakt door lucas en te vinden in zijn logboek.
+
+Verder is ook uitgezocht welke plant uit het onderzoek overeennkomt met welk SRA nummer. Dit staat in een bijgevoegd bestand op de github pagina
+Verder heb ik ook nog gezocht naar artikelen die informatie bevatten over welke pathways er essentieel zijn of een grote impact hebben op de bolting bij de Arabidopsis thaliana.
+
+
+Resultaten: Annotatie wordt verder gedaan door lucas, verder is er gezocht naar wat invloed heeft op bolting
+Analyse van resultaten: Er zijn zeker onderliggende pathways die invloed hebben op de bolting van Arabidopsis thaliana, dus kan hier verder naar gezocht worden
+Conclusie: Volgende keer moeten er artikelen worden gezocht waarin pathways die impact hebben op bolting in Arabidopsis thaliana worden besproken.
+
+
+# 07-10-2026
+Doel: Verder zoeken naar oorzaken bolting 
+Motivatie: Mocht er nog tijd overzijn kunnen we eventueel nog een link leggen tussen mutanten en hun bolting status
+Werkzaamheden: 
+
+Gedurende de les ben ik verder gegaan met het lezen over pathways die effect hebben op de bolting van de Arabidopsis thaliana. 
+
+De volgende artikelen heb ik hier nog over gevonden:
+https://pmc.ncbi.nlm.nih.gov/articles/PMC3901435/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC135562/
+https://academic.oup.com/pcp/article/46/2/292/1864943
+https://encyclopedia.pub/entry/10559
+https://onlinelibrary.wiley.com/doi/full/10.1002/pld3.279
+
+Uiteindelijke analyse stappen zijn te vinden in het logboek van tristan.
+
+Resultaten: Meerdere artikelen gevonden met betrekking tot bolting van Arabidopsis thaliana
+Analyse van resultaten: Uiteindelijk duiken we hier niet verder in dus wordt hier niets meer mee gedaan, maar kan misschien wel nog interessant zijn voor het transcriptomics gedeelte
+Conclusie: Eindanalyse is te vinden in logboek van tristan
+

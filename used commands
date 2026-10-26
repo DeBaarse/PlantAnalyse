@@ -138,3 +138,10 @@ bcftools filter \
 ?????Misschien multiQC
 
 
+
+
+featureCounts -T 8 \
+              -p \
+              -a ../STAR/genomic.gtf \
+              -o counts_ouputs/counts.txt \
+              SRR*.bam

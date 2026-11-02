@@ -1,0 +1,81 @@
+---
+title: "Untitled"
+author: "F Kinds"
+date: "2026-10-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+
+non_bolted_counts <- read.table("/students/2026-2027/Thema05/plantanalysegroep2/Mapping_Non_Bolted/counts_output.txt", header = TRUE, sep = "\t", skip = 1, row.names = 1)
+bolted_counts <- read.table("/students/2026-2027/Thema05/plantanalysegroep2/Mapping_Bolted/counts_output.txt", header = TRUE, sep = "\t", skip = 1, row.names = 1)
+
+cleaned_non_bolted <- non_bolted_counts[, c(names(non_bolted_counts)[-(1:5)])]
+names(cleaned_non_bolted) <- paste0("None_r", 1:ncol(cleaned_non_bolted))
+
+cleaned_bolted <- bolted_counts[, c(names(bolted_counts)[-(1:5)])]
+names(cleaned_bolted) <- paste0("Bolted_r", 1:ncol(cleaned_bolted))
+
+
+both_cleaned <- cbind(cleaned_non_bolted, cleaned_bolted)
+
+barplot(colSums(cleaned_bolted) / 1e6, las=2, cex.names=0.7, ylim=c(0,120))
+barplot(colSums(cleaned_non_bolted) / 1e6, las=2, cex.names=0.7, ylim= c(0,120))
+```
+
+
+
+```{r cars}
+library(DESeq2)
+library(edgeR)
+
+
+(ddsMat <- DESeqDataSetFromMatrix(countData = both_cleaned,
+                                  colData = data.frame(samples = names(both_cleaned)),
+                                  design = ~ 1))
+
+rld.dds <- vst(ddsMat)
+rld <- assay(rld.dds)
+
+
+plotPCA(rld.dds, intgroup = "samples")
+
+library(ggplot2)
+
+# Perform PCA
+plotje <- plotMDS(both_cleaned)
+
+?plotPCA
+
+
+install.packages("corrr")
+library('corrr')
+
+install.packages("ggcorrplot")
+library(ggcorrplot)
+
+install.packages("FactoMineR")
+library("FactoMineR")
+
+res.pca <- PCA(rld)
+plot.pca <- plot(res.pca)
+
+install.packages("factoextra")
+library(factoextra)
+
+
+
+plot.PCA(both_cleaned)
+
+class(both_cleaned)
+str(both_cleaned)
+
+
+
+
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -58,24 +58,29 @@ library(ggcorrplot)
 install.packages("FactoMineR")
 library("FactoMineR")
 
-res.pca <- PCA(rld)
-plot.pca <- plot(res.pca)
+res.pca <- PCA(t(rld))
+
 
 install.packages("factoextra")
 library(factoextra)
 
 
 
-plot.PCA(both_cleaned)
 
-class(both_cleaned)
-str(both_cleaned)
-
-
+plot(res.pca)
+fviz_pca_ind(res.pca,
+             repel = TRUE,
+             title = "PCA of RNA-seq samples")
 
 
 
 
 ```
+
+```{r, echo=TRUE}
+
+
+```
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
